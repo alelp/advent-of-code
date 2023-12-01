@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+# Rust things
+20*-rs/target
