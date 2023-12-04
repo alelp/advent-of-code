@@ -31,7 +31,9 @@ func main() {
     part2,
   }
 
-  RunDay("1", part1, part2);
+  day := 1
+  RunTests(day, part1, part2);
+  RunDay(day, part1, part2);
 }
 
 func part2(lines []string) int {
