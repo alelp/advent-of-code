@@ -1,0 +1,9 @@
+#!/bin/sh
+
+filename="day$1.go"
+
+if [ -f "$filename" ] ; then
+    go run $filename utils.go
+else
+    echo "No main file called $filename"
+fi
