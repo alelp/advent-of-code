@@ -42,7 +42,6 @@ func LoadInput(day int) []string {
 func RunTests(day int, part1 DayPart, part2 DayPart) {
   fmt.Println("-----------------")
   fmt.Printf("Day %d part 1 test passed: %t\n", day, part1.solver(part1.test_lines) == part1.test_result)
-  fmt.Println("-----------------")
   fmt.Printf("Day %d part 2 test passed: %t\n", day, part2.solver(part2.test_lines) == part2.test_result)
   fmt.Println("-----------------")
 }
@@ -57,7 +56,6 @@ func RunDay(day int, part1 DayPart, part2 DayPart) {
 
   fmt.Println("-----------------")
   fmt.Printf("Day %d part 1 result: %d\n", day, part1.solver(lines))
-  fmt.Println("-----------------")
   fmt.Printf("Day %d part 2 result: %d\n", day, part2.solver(lines))
   fmt.Println("-----------------")
 }
