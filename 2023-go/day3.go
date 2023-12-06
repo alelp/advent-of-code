@@ -26,8 +26,18 @@ func main() {
 
   part2 := DayPart{
     []string {
+      "467..114..",
+      "...*......",
+      "..35..633.",
+      "......#...",
+      "617*......",
+      ".....+.58.",
+      "..592.....",
+      "......755.",
+      "...$..*...",
+      ".664...598",
     },
-    -1,
+    467835,
     part2,
   }
 
@@ -102,7 +112,89 @@ func is_symbol(lines []string, x int, y int) bool {
   return char != '.' && (char < '0' || char > '9')
 }
 
+type Position struct {
+  x int
+  y int
+}
+
+func is_digit(c byte) bool {
+  return '0' <= c && c <= '9'
+}
+
+func find_value(lines []string, x int, y int) (Position, int, bool) {
+  var pos Position
+  var value = -1
+  var success = false
+
+  if y >= 0 && y < len(lines) {
+    line := lines[y]
+    line_limit := len(line)
+
+    if x >= 0 && x < len(line) {
+      char := line[x]
+      if is_digit(char) {
+        pos.y = y
+        pos.x = x
+
+        for is_digit(line[pos.x]) && pos.x > 0 {
+          pos.x--
+        }
+
+        if !is_digit(line[pos.x]) {
+          pos.x++
+        }
+
+        var end = x
+
+        for end < line_limit && is_digit(line[end]) {
+          end++
+        }
+
+        value, _ = strconv.Atoi(line[pos.x:end])
+
+        success = true
+      }
+    }
+  }
+
+  return pos, value, success
+}
+
 func part2(lines []string) int {
   var result = 0
+
+  offsets := []int { -1, 0, 1 }
+
+  for y, line := range lines {
+    for x, char := range line {
+      if char == '*' {
+        var values = make(map[Position]int)
+
+        for _, offset_x := range offsets {
+          for _, offset_y := range offsets {
+            position, value, success := find_value(lines, x + offset_x, y + offset_y)
+
+            if success {
+              values[position] = value
+            }
+          }
+        }
+
+        if len(values) > 2 {
+          fmt.Println("ERROR: Too many numbers for gear at", x, y)
+        } else if len(values) == 2 {
+          var ratio = 1
+
+          for _, value := range values {
+            ratio *= value
+          }
+
+          result += ratio
+        }
+      }
+    }
+  }
+
   return result
 }
+
