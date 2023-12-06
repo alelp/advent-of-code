@@ -8,15 +8,9 @@ import (
  _ "strconv"
 )
 
-type DayPart struct {
-  test_lines []string
-  test_result int
-  solver func([]string) int
-}
+type solver_fn func([]string) int
 
-func LoadInput(day int) []string {
-  filename := fmt.Sprintf("input/day%d.txt", day)
-
+func LoadInput(filename string) []string {
   input_file, err := os.Open(filename)
 
   if err != nil {
@@ -39,23 +33,21 @@ func LoadInput(day int) []string {
   return fileLines;
 }
 
-func RunTests(day int, part1 DayPart, part2 DayPart) {
-  fmt.Println("-----------------")
-  fmt.Printf("Day %d part 1 test passed: %t\n", day, part1.solver(part1.test_lines) == part1.test_result)
-  fmt.Printf("Day %d part 2 test passed: %t\n", day, part2.solver(part2.test_lines) == part2.test_result)
-  fmt.Println("-----------------")
+func RunTest(day int, part int, solver solver_fn, result int) {
+  filename := fmt.Sprintf("tests/day%dpart%d.txt", day, part)
+  test_lines := LoadInput(filename)
+  fmt.Printf("Day %d part %d test passed: %t\n", day, part, solver(test_lines) == result)
 }
 
-func RunDay(day int, part1 DayPart, part2 DayPart) {
-  var lines = LoadInput(day);
+func RunDay(day int, solver1 solver_fn, solver2 solver_fn) {
+  filename := fmt.Sprintf("input/day%d.txt", day)
+  var lines = LoadInput(filename);
 
   if lines == nil {
     fmt.Println("Error: Missing Day", day, "input.")
     return
   }
 
-  fmt.Println("-----------------")
-  fmt.Printf("Day %d part 1 result: %d\n", day, part1.solver(lines))
-  fmt.Printf("Day %d part 2 result: %d\n", day, part2.solver(lines))
-  fmt.Println("-----------------")
+  fmt.Printf("Day %d part 1 result: %d\n", day, solver1(lines))
+  fmt.Printf("Day %d part 2 result: %d\n", day, solver2(lines))
 }

@@ -3,37 +3,22 @@ package main
 import (
 	"strconv"
 	"strings"
+	"fmt"
 )
 
 func main() {
-  part1 := DayPart{
-    []string {
-      "1abc2", 
-      "pqr3stu8vwx", 
-      "a1b2c3d4e5f", 
-      "treb7uchet", 
-    },
-    142,
-    part1,
-  }
-
-  part2 := DayPart{
-    []string {
-      "two1nine",
-      "eightwothree",
-      "abcone2threexyz",
-      "xtwone3four",
-      "4nineeightseven2",
-      "zoneight234",
-      "7pqrstsixteen",
-    },
-    281,
-    part2,
-  }
-
   day := 1
-  RunTests(day, part1, part2);
+  test_result1 := 142
+  test_result2 := 281
+
+  fmt.Println("---------------------------------------------------")
+  fmt.Println("Day", day)
+  fmt.Println("---------------------------------------------------")
+  RunTest(day, 1, part1, test_result1);
+  RunTest(day, 2, part2, test_result2);
+  fmt.Println("---------------------------------------------------")
   RunDay(day, part1, part2);
+  fmt.Println("---------------------------------------------------")
 }
 
 func part2(lines []string) int {
